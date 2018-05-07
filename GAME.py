@@ -16,7 +16,7 @@ pygame.display.set_caption("...'")
 
 all_sprites_list = pygame.sprite.Group()
                            
-playerplayer = player(PURPLE, 20, 30)
+playerplayer = player(PURPLE, 20, 30, 10)
 
 all_sprites_list.add(playerplayer)
 
@@ -33,7 +33,10 @@ while carryOn:
         playerplayer.moveLeft(5)
     if keys[pygame.K_d]:
         playerplayer.moveRight(5)
-    if keys[pygame.
+    if keys[pygame.K_s]:
+        playerplayer.moveForward(5)
+    if keys [pygame.K_w]:
+       playerplayer.moveBackward(5)
                                     
 
 #GAME LOGIC
