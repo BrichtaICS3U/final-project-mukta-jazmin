@@ -1,11 +1,11 @@
 import pygame, random
 from player_class import player
-from enemy_class import enemy
+from treasure_class import Treasure
 pygame.init()
 
 PURPLE = (255, 0, 255)
-BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+RED = (255, 0, 0)
 
 speed = 1
 
@@ -17,18 +17,14 @@ screen= pygame.display.set_mode(size)
 pygame.display.set_caption("...'")
 
 all_sprites_list = pygame.sprite.Group()
-                           
+all_treasure_list = pygame.sprite.Group()
+
 playerplayer = player(PURPLE, 20, 30, 10)
 
-enemy1 = enemy(BLACK, 20, 30, 10)
-enemy1.rect.x = 500
-enemy1.rect.y = 500
+treasure1 = Treasure([100, 60])
 
 all_sprites_list.add(playerplayer)
-all_sprites_list.add(enemy1)
-
-all_enemy_sprites = pygame.sprite.Group()
-all_enemy_sprites.add(enemy1)
+all_treasure_list.add(treasure1)
 
 carryOn = True
 clock = pygame.time.Clock()
@@ -36,7 +32,7 @@ clock = pygame.time.Clock()
 while carryOn:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
-            carryOn=FALSE
+            carryOn= False
 
     keys = pygame.key.get_pressed()
     if  keys[pygame.K_a]:
@@ -50,21 +46,25 @@ while carryOn:
                                     
 
 #GAME LOGIC
-    for enemy in all_enemy_sprites:
-        enemy.moveForward(speed)
-        
+    hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
+
+    if hit:
+        print ("sdfs")
     all_sprites_list.update()
 
 #DRAWING ON SCREEN
     screen.fill(WHITE)
 
+    pygame.draw.rect(screen, RED, [400, 400, 200, 200])
+
     all_sprites_list.draw(screen)
-
-    #all_enemy_sprites.draw(screen)
-
+    all_treasure_list.draw(screen)
+    
     pygame.display.flip()
 
     clock.tick(60)
 
 pygame.quit()
                            
+#CITATIONS
+#code for treasure collisions : https://stackoverflow.com/questions/29640685/how-do-i-detect-collision-in-pygame
