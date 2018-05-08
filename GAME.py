@@ -37,6 +37,7 @@ while carryOn:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
             carryOn=FALSE
+         
 
     keys = pygame.key.get_pressed()
     if  keys[pygame.K_a]:
@@ -47,8 +48,8 @@ while carryOn:
         playerplayer.moveForward(5)
     if keys [pygame.K_w]:
        playerplayer.moveBackward(5)
-                                    
 
+                                
 #GAME LOGIC
     for enemy in all_enemy_sprites:
         enemy.moveForward(speed)
