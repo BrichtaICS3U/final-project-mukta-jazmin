@@ -43,8 +43,8 @@ while carryOn:
         playerplayer.moveForward(5)
     if keys [pygame.K_w]:
        playerplayer.moveBackward(5)
-                                    
 
+                                
 #GAME LOGIC
     hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
 
