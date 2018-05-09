@@ -1,11 +1,13 @@
 import pygame, random
 from player_class import player
 from enemy_class import enemy
+from treasure_class import Treasure
 pygame.init()
 
 PURPLE = (255, 0, 255)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+RED = (255, 0, 0)
 
 speed = 1
 
@@ -20,15 +22,21 @@ all_sprites_list = pygame.sprite.Group()
                            
 playerplayer = player(PURPLE, 20, 30, 10)
 
+treasure1 = Treasure([100, 60])
+
 enemy1 = enemy(BLACK, 20, 30, 10)
 enemy1.rect.x = 500
 enemy1.rect.y = 500
 
+all_enemy_sprites = pygame.sprite.Group()
+all_treasure_list = pygame.sprite.Group()
+all_enemy_sprites.add(enemy1)
+
+
 all_sprites_list.add(playerplayer)
 all_sprites_list.add(enemy1)
+all_treasure_list.add(treasure1)
 
-all_enemy_sprites = pygame.sprite.Group()
-all_enemy_sprites.add(enemy1)
 
 carryOn = True
 clock = pygame.time.Clock()
@@ -56,12 +64,17 @@ while carryOn:
         
     all_sprites_list.update()
 
+    hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
+
+    if hit:
+        print ("sdfs")
+    all_sprites_list.update()
+
 #DRAWING ON SCREEN
     screen.fill(WHITE)
 
     all_sprites_list.draw(screen)
-
-    #all_enemy_sprites.draw(screen)
+    all_treasure_list.draw(screen)
 
     pygame.display.flip()
 
