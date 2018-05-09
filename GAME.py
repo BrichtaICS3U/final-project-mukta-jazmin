@@ -1,13 +1,15 @@
 import pygame, random
 from player_class import player
+from treasure_class import Treasure
 from enemy_class import enemy
 from treasure_class import Treasure
 pygame.init()
 
 PURPLE = (255, 0, 255)
-BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
+BLACK = (0, 0, 0)
+
 
 speed = 1
 
@@ -44,8 +46,7 @@ clock = pygame.time.Clock()
 while carryOn:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
-            carryOn=FALSE
-         
+            carryOn= False
 
     keys = pygame.key.get_pressed()
     if  keys[pygame.K_a]:
@@ -61,7 +62,13 @@ while carryOn:
 #GAME LOGIC
     for enemy in all_enemy_sprites:
         enemy.moveForward(speed)
-        
+
+    all_sprites_list.update()
+    
+    hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
+
+    if hit:
+        print ("sdfs")
     all_sprites_list.update()
 
     hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
@@ -82,3 +89,5 @@ while carryOn:
 
 pygame.quit()
                            
+#CITATIONS
+#code for treasure collisions : https://stackoverflow.com/questions/29640685/how-do-i-detect-collision-in-pygame
