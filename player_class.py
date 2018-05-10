@@ -26,10 +26,10 @@ class player(pygame.sprite.Sprite):
         self.rect.x -= pixels
 
     def moveForward(self, speed):
-        self.rect.y += self.speed*speed/20
+        self.rect.y += self.speed*speed/10
 
     def moveBackward(self,speed):
-        self.rect.y -= self.speed*speed/20
+        self.rect.y -= self.speed*speed/10
 
     def changeSpeed(self,speed):
         self.speed = speed

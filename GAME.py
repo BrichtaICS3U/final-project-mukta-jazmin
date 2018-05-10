@@ -2,7 +2,6 @@ import pygame, random
 from player_class import player
 from treasure_class import Treasure
 from enemy_class import enemy
-from treasure_class import Treasure
 pygame.init()
 
 PURPLE = (255, 0, 255)
@@ -71,11 +70,6 @@ while carryOn:
         print ("sdfs")
     all_sprites_list.update()
 
-    hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
-
-    if hit:
-        print ("sdfs")
-    all_sprites_list.update()
 
 #DRAWING ON SCREEN
     screen.fill(WHITE)
