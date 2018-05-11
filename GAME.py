@@ -21,11 +21,11 @@ pygame.display.set_caption("...'")
 
 all_sprites_list = pygame.sprite.Group()
                            
-playerplayer = player(PURPLE, 20, 30, 10)
+playerplayer = player(120,100,70)
 
-treasure1 = Treasure([100, 60])
+treasure1 = Treasure([300, 60])
 
-enemy1 = enemy(BLACK, 20, 30, 10)
+enemy1 = enemy(80, 120, 40)
 enemy1.rect.x = 500
 enemy1.rect.y = 500
 
