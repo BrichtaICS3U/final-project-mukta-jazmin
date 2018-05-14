@@ -2,7 +2,6 @@ import pygame, random
 from player_class import player
 from treasure_class import Treasure
 from enemy_class import enemy
-from treasure_class import Treasure
 pygame.init()
 
 PURPLE = (255, 0, 255)
@@ -10,11 +9,10 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLACK = (0, 0, 0)
 
-
 speed = 1
 
-SCREENWIDTH = 0
-SCREENHEIGHT = 0
+SCREENWIDTH = 1200
+SCREENHEIGHT = 800
 
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen= pygame.display.set_mode(size)
@@ -50,32 +48,27 @@ while carryOn:
 
     keys = pygame.key.get_pressed()
     if  keys[pygame.K_a]:
-        playerplayer.moveLeft(5)
+        playerplayer.moveLeft (5)
     if keys[pygame.K_d]:
-        playerplayer.moveRight(5)
+        playerplayer.moveRight (5)
     if keys[pygame.K_s]:
-        playerplayer.moveForward(5)
+        playerplayer.moveForward (5)
     if keys [pygame.K_w]:
-       playerplayer.moveBackward(5)
+       playerplayer.moveBackward (5)
 
                                 
 #GAME LOGIC
+
     for enemy in all_enemy_sprites:
         enemy.moveForward(speed)
 
     all_sprites_list.update()
     
     hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
-
     if hit:
         print ("sdfs")
     all_sprites_list.update()
 
-    hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
-
-    if hit:
-        print ("sdfs")
-    all_sprites_list.update()
 
 #DRAWING ON SCREEN
     screen.fill(WHITE)

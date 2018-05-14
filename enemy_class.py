@@ -31,7 +31,7 @@ class enemy(pygame.sprite.Sprite):
     def update(self):
         self.rect.x = self.rect.x + random.randint(-1, 1)*self.speed
         if  self.rect.x < 500-100:
-            self.rect.x=500-100
+            self.rect.x=500 - 100
         elif self.rect.x > 500+100:
             self.rect.x=500+100
             
