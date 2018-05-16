@@ -29,7 +29,9 @@ all_sprites_list = pygame.sprite.Group()
                            
 playerplayer = player(120,100,70)
 
-treasure1 = Treasure([300, 60])
+treasure1 = Treasure(100,120)
+treasure1.rect.x = 500
+treasure1.rect.y = 500
 
 enemy1 = enemy(80, 120, 40)
 enemy1.rect.x = 500
