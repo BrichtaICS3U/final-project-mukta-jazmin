@@ -11,6 +11,13 @@ BLACK = (0, 0, 0)
 
 speed = 1
 
+font = pygame.font.SysFont("Courier", 25)
+
+def score (score):
+    text = font.render("Score: " + str(score), True black)
+    gameDisplay.blit
+
+
 SCREENWIDTH = 1200
 SCREENHEIGHT = 800
 
@@ -64,11 +71,15 @@ while carryOn:
 
     all_sprites_list.update()
     
-    hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
-    if hit:
+    point= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
+    if point:
         print ("sdfs")
     all_sprites_list.update()
 
+    hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
+    if hit:
+        print("game over")
+        carryOn=False
 
 #DRAWING ON SCREEN
     screen.fill(WHITE)

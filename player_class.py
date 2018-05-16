@@ -41,12 +41,12 @@ class player(pygame.sprite.Sprite):
         self.speed = speed
 
     def update(self):
-        if  self.rect.x < 600 - 600:
-            self.rect.x= 600 - 600
+        if  self.rect.x < 600 - 625:
+            self.rect.x= 600 - 625
         elif self.rect.x > 600 + 580:
             self.rect.x=600 + 580 
             
-        if  self.rect.y < 400 - 400:
-            self.rect.y=400 - 400
+        if  self.rect.y < 400 - 410:
+            self.rect.y=400 - 410
         elif self.rect.y > 400 + 325:
             self.rect.y= 400 + 325
