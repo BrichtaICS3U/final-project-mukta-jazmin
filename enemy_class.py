@@ -46,8 +46,7 @@ class enemy(pygame.sprite.Sprite):
             else:
                 self.rect.y-= 5
             self.steps -= 1
-            
-            
+
         if  self.rect.x < 500-200:
             self.rect.x=500-200
         elif self.rect.x > 500+200:
