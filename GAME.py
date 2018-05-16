@@ -58,18 +58,21 @@ while carryOn:
 
                                 
 #GAME LOGIC
-
     for enemy in all_enemy_sprites:
         enemy.moveForward(speed)
 
     all_sprites_list.update()
     
-    hit= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
-    if hit:
+    point= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
+    if point:
         print ("sdfs")
     all_sprites_list.update()
 
-
+    hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
+    if hit:
+        print("game over")
+        carryOn=False
+    
 #DRAWING ON SCREEN
     screen.fill(WHITE)
 
