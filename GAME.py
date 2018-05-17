@@ -28,6 +28,8 @@ pygame.display.set_caption("...'")
 all_sprites_list = pygame.sprite.Group()
                            
 playerplayer = player(120,100,70)
+playerplayer.rect.x = 0
+playerplayer.rect.y = 0
 
 treasure1 = Treasure(100,120)
 treasure1.rect.x = 500
@@ -65,22 +67,24 @@ while carryOn:
     if keys [pygame.K_w]:
        playerplayer.moveBackward (5)
 
+
                                 
 #GAME LOGIC
     for enemy in all_enemy_sprites:
         enemy.moveForward(speed)
 
-    all_sprites_list.update()
+    all_enemy_sprites.update(playerplayer)
     
     point= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
     if point:
         print ("sdfs")
-    all_sprites_list.update()
+   # all_sprites_list.update()
 
     hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
     if hit:
         print("game over")
         carryOn=False
+
 
 #DRAWING ON SCREEN
     screen.fill(WHITE)
@@ -95,4 +99,5 @@ while carryOn:
 pygame.quit()
                            
 #CITATIONS
-#code for treasure collisions : https://stackoverflow.com/questions/29640685/how-do-i-detect-collision-in-pygame
+#code for treasure collisions: https://stackoverflow.com/questions/29640685/how-do-i-detect-collision-in-pygame
+#code for enemy chase function: https://stackoverflow.com/questions/10971671/how-to-make-an-enemy-follow-a-player-in-pygame/10971710

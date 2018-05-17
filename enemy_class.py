@@ -32,7 +32,7 @@ class enemy(pygame.sprite.Sprite):
         self.speed = speed
 
 
-    def update(self):
+    def chase(self):
         if self.steps <=0:
             self.steps = random.randint(5,10)
             self.direction = random.randint(1,4)
@@ -57,5 +57,10 @@ class enemy(pygame.sprite.Sprite):
             self.rect.y=500-100
         elif self.rect.y > 500+100:
             self.rect.y=500+100
+
+    def update(self, player):
+        dx, dy = (player.rect.x - self.rect.x)/(math.sqrt((player.rect.x - self.rect.x) ** 2 + (player.rect.y - self.rect.y) ** 2)), (player.rect.y - self.rect.y)/math.sqrt((player.rect.x - self.rect.x)**2 +(player.rect.y - self.rect.y) ** 2)
+        self.rect.x +=dx
+        self.rect.y += dy
 
     
