@@ -2,6 +2,7 @@ import pygame, random
 from player_class import player
 from treasure_class import Treasure
 from enemy_class import enemy
+from exitDoor_class import exitDoor
 pygame.init()
 
 PURPLE = (255, 0, 255)
@@ -39,15 +40,20 @@ enemy1 = enemy(80, 120, 40)
 enemy1.rect.x = 500
 enemy1.rect.y = 500
 
+exitDoor = exitDoor(100,120)
+exitDoor.rect.x = 700
+exitDoor.rect.y = 600
+
 all_enemy_sprites = pygame.sprite.Group()
 all_treasure_list = pygame.sprite.Group()
+all_exitDoor_list = pygame.sprite.Group()
 all_enemy_sprites.add(enemy1)
 
 
 all_sprites_list.add(playerplayer)
 all_sprites_list.add(enemy1)
 all_treasure_list.add(treasure1)
-
+all_exitDoor_list.add(exitDoor)
 
 carryOn = True
 clock = pygame.time.Clock()
@@ -91,6 +97,7 @@ while carryOn:
 
     all_sprites_list.draw(screen)
     all_treasure_list.draw(screen)
+    all_exitDoor_list.draw(screen)
 
     pygame.display.flip()
 
