@@ -6,7 +6,7 @@ class Treasure(pygame.sprite.Sprite):
     def __init__(self, width, height):
         super().__init__()
         
-        self.image=pygame.image.load('images.png').convert()
+        self.image=pygame.image.load('0fd6c92a21a378d30f9c7b8ddc12723d.jpg').convert()
         #self.image.set_colorkey(BLACK)
         self.image=pygame.transform.scale(self.image,(width,height))
 

@@ -28,7 +28,7 @@ pygame.display.set_caption("...'")
 
 all_sprites_list = pygame.sprite.Group()
                            
-playerplayer = player(120,100,70)
+playerplayer = player(160,100,70)
 playerplayer.rect.x = 0
 playerplayer.rect.y = 0
 
@@ -40,18 +40,26 @@ enemy1 = enemy(80, 120, 40)
 enemy1.rect.x = 500
 enemy1.rect.y = 500
 
+enemy2 = enemy(80, 120, 40)
+enemy2.rect.x = 1200
+enemy2.rect.y = 0
+
+enemy3 = enemy(80, 120, 40)
+enemy3.rect.x = 0
+enemy3.rect.y = 800
+
 exitDoor = exitDoor(100,120)
-exitDoor.rect.x = 700
+exitDoor.rect.x = 900
 exitDoor.rect.y = 600
 
 all_enemy_sprites = pygame.sprite.Group()
 all_treasure_list = pygame.sprite.Group()
 all_exitDoor_list = pygame.sprite.Group()
-all_enemy_sprites.add(enemy1)
+all_enemy_sprites.add(enemy1, enemy2, enemy3)
 
 
 all_sprites_list.add(playerplayer)
-all_sprites_list.add(enemy1)
+all_sprites_list.add(enemy1,enemy2, enemy3)
 all_treasure_list.add(treasure1)
 all_exitDoor_list.add(exitDoor)
 
@@ -90,6 +98,12 @@ while carryOn:
     if hit:
         print("game over")
         carryOn=False
+
+    escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, True)
+    if escape:
+        print('YOU HAVE ESCAPED')
+        carryOn=False
+
 
 
 #DRAWING ON SCREEN
