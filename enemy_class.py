@@ -35,7 +35,8 @@ class enemy(pygame.sprite.Sprite):
         self.speed = speed
 
 
-    def chase(self):
+    def update(self):
+        """This method will choose a pseudo-random walk for the mummy."""
         if self.steps <=0:
             self.steps = random.randint(5,10)
             self.direction = random.randint(1,4)
@@ -50,21 +51,23 @@ class enemy(pygame.sprite.Sprite):
                 self.rect.y-= 5
             self.steps -= 1
 
+        #prevent mummies from walking off screen
         if  self.rect.x < 0:
-            self.rect.x=1200
-        elif self.rect.x > 1200:
-           self.rect.x=1200
+            self.rect.x=0
+        elif self.rect.x > 1000:
+           self.rect.x=1000
             
-        self.rect.y = self.rect.y + random.randint(-5, 5)*self.speed/20
         if  self.rect.y < 0:
-            self.rect.y=800
+            self.rect.y=0
         elif self.rect.y > 800:
             self.rect.y=800
 
-    def update(self, player):
-        dx, dy = (player.rect.x - self.rect.x)/(math.sqrt((player.rect.x - self.rect.x) ** 2 + (player.rect.y - self.rect.y) ** 2)), (player.rect.y - self.rect.y)/math.sqrt((player.rect.x - self.rect.x)**2 +(player.rect.y - self.rect.y) ** 2)
-        self.rect.x +=dx
-        self.rect.y += dy
+    def chase(self, player, distance):
+        """This method allows the mummy to chase the player."""
+        dx = (player.rect.x - self.rect.x)/distance
+        dy = (player.rect.y - self.rect.y)/distance
+        self.rect.x += dx*self.speed
+        self.rect.y += dy*self.speed
 
         #newCoord = (player.rect.x + dx * self.speed, player.rect.y + dy * self.speed)
 

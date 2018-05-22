@@ -1,4 +1,4 @@
-import pygame, random
+import pygame, random, math
 from player_class import player
 from treasure_class import Treasure
 from enemy_class import enemy
@@ -35,12 +35,12 @@ enemy1.rect.x = 500
 enemy1.rect.y = 500
 
 enemy2 = enemy(80, 120, 40)
-enemy2.rect.x = 1200
-enemy2.rect.y = 0
+enemy2.rect.x = 1000
+enemy2.rect.y = 100
 
 enemy3 = enemy(80, 120, 40)
-enemy3.rect.x = 0
-enemy3.rect.y = 800
+enemy3.rect.x = 100
+enemy3.rect.y = 700
 
 exitDoor = exitDoor(100,120)
 exitDoor.rect.x = 900
@@ -53,7 +53,8 @@ all_enemy_sprites.add(enemy1, enemy2, enemy3)
 
 
 all_sprites_list.add(playerplayer)
-all_sprites_list.add(enemy1,enemy2, enemy3)
+#leave enemies in their own group
+#all_sprites_list.add(enemy1,enemy2, enemy3)
 all_treasure_list.add(treasure1)
 all_exitDoor_list.add(exitDoor)
 
@@ -80,15 +81,19 @@ while carryOn:
 #GAME LOGIC
 
     for enemy in all_enemy_sprites:
-        enemy.moveForward(speed)
+        #calculate distance between player and mummy and use for behaviour
+        distance = math.hypot(enemy.rect.x-playerplayer.rect.x, enemy.rect.y-playerplayer.rect.y)
+        #print("distance ", +distance)
+        if distance < 300: #later mummies could detect player in larger distance
+            enemy.chase(playerplayer, distance)
+        else:
+            enemy.update()
 
-    all_enemy_sprites.update(playerplayer)
-    
     point= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
     if point:
-        print ("sdfs")
+        print ("You picked up the treasure!")
         artifact_counter += 1
-    #all_sprites_list.update()
+    all_sprites_list.update()
 
     hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
     if hit:
@@ -110,7 +115,7 @@ while carryOn:
 
 #DRAWING ON SCREEN
     screen.fill(WHITE)
-
+    all_enemy_sprites.draw(screen)
     all_sprites_list.draw(screen)
     all_treasure_list.draw(screen)
     screen.blit(textSurfaceTitle, textRectTitle)
