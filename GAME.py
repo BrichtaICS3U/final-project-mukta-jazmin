@@ -2,6 +2,7 @@ import pygame, random
 from player_class import player
 from treasure_class import Treasure
 from enemy_class import enemy
+from exitDoor_class import exitDoor
 pygame.init()
 
 PURPLE = (255, 0, 255)
@@ -21,23 +22,40 @@ pygame.display.set_caption("...'")
 
 all_sprites_list = pygame.sprite.Group()
                            
-playerplayer = player(120,100,70)
+playerplayer = player(160,100,70)
+playerplayer.rect.x = 0
+playerplayer.rect.y = 0
 
-treasure1 = Treasure([300, 60])
+treasure1 = Treasure(100,120)
+treasure1.rect.x = 500
+treasure1.rect.y = 500
 
 enemy1 = enemy(80, 120, 40)
 enemy1.rect.x = 500
 enemy1.rect.y = 500
 
+enemy2 = enemy(80, 120, 40)
+enemy2.rect.x = 1200
+enemy2.rect.y = 0
+
+enemy3 = enemy(80, 120, 40)
+enemy3.rect.x = 0
+enemy3.rect.y = 800
+
+exitDoor = exitDoor(100,120)
+exitDoor.rect.x = 900
+exitDoor.rect.y = 600
+
 all_enemy_sprites = pygame.sprite.Group()
 all_treasure_list = pygame.sprite.Group()
-all_enemy_sprites.add(enemy1)
+all_exitDoor_list = pygame.sprite.Group()
+all_enemy_sprites.add(enemy1, enemy2, enemy3)
 
 
 all_sprites_list.add(playerplayer)
-all_sprites_list.add(enemy1)
+all_sprites_list.add(enemy1,enemy2, enemy3)
 all_treasure_list.add(treasure1)
-
+all_exitDoor_list.add(exitDoor)
 
 carryOn = True
 clock = pygame.time.Clock()
@@ -57,19 +75,20 @@ while carryOn:
     if keys [pygame.K_w]:
        playerplayer.moveBackward (5)
 
+
                                 
 #GAME LOGIC
 
     for enemy in all_enemy_sprites:
         enemy.moveForward(speed)
 
-    all_sprites_list.update()
+    all_enemy_sprites.update(playerplayer)
     
     point= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
     if point:
         print ("sdfs")
         artifact_counter += 1
-    all_sprites_list.update()
+    #all_sprites_list.update()
 
     hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
     if hit:
@@ -83,12 +102,19 @@ while carryOn:
 
     pygame.display.update()
 
+    escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, True)
+    if escape:
+        print('YOU HAVE ESCAPED')
+        carryOn=False
+
+
 #DRAWING ON SCREEN
     screen.fill(WHITE)
 
     all_sprites_list.draw(screen)
     all_treasure_list.draw(screen)
     screen.blit(textSurfaceTitle, textRectTitle)
+    all_exitDoor_list.draw(screen)
 
     pygame.display.flip()
 
@@ -97,4 +123,5 @@ while carryOn:
 pygame.quit()
                            
 #CITATIONS
-#code for treasure collisions : https://stackoverflow.com/questions/29640685/how-do-i-detect-collision-in-pygame
+#code for treasure collisions: https://stackoverflow.com/questions/29640685/how-do-i-detect-collision-in-pygame
+#code for enemy chase function: https://stackoverflow.com/questions/10971671/how-to-make-an-enemy-follow-a-player-in-pygame/10971710
