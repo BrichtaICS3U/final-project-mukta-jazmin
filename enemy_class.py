@@ -10,9 +10,13 @@ class enemy(pygame.sprite.Sprite):
     def __init__(self, width, height, speed):
         super().__init__()
 
-        self.image=pygame.image.load('flat,800x800,075,f.u1.jpg').convert()
+        self.image=pygame.image.load('pixelMummy.png').convert()
         self.image.set_colorkey(WHITE)
         self.image=pygame.transform.scale(self.image,(width,height))
+
+        self.rect = self.image.get_rect()
+        self.radius = 25
+        pygame.draw.circle(self.image,BLACK, self.rect.center, self.radius)
 
         self.width = width
         self.height = height
@@ -69,6 +73,6 @@ class enemy(pygame.sprite.Sprite):
         self.rect.x += dx*self.speed
         self.rect.y += dy*self.speed
 
-        #newCoord = (player.rect.x + dx * self.speed, player.rect.y + dy * self.speed)
+    
 
     

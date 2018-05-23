@@ -9,6 +9,7 @@ PURPLE = (255, 0, 255)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLACK = (0, 0, 0)
+SAND = (247, 231, 173)
 
 speed = 1
 artifact_counter = 0
@@ -22,7 +23,7 @@ pygame.display.set_caption("...'")
 
 all_sprites_list = pygame.sprite.Group()
                            
-playerplayer = player(160,100,70)
+playerplayer = player(280,180,70)
 playerplayer.rect.x = 0
 playerplayer.rect.y = 0
 
@@ -30,15 +31,15 @@ treasure1 = Treasure(100,120)
 treasure1.rect.x = 500
 treasure1.rect.y = 500
 
-enemy1 = enemy(80, 120, 40)
+enemy1 = enemy(60, 70, 40)
 enemy1.rect.x = 500
 enemy1.rect.y = 500
 
-enemy2 = enemy(80, 120, 40)
+enemy2 = enemy(60, 70, 40)
 enemy2.rect.x = 1000
 enemy2.rect.y = 100
 
-enemy3 = enemy(80, 120, 40)
+enemy3 = enemy(60, 70, 40)
 enemy3.rect.x = 100
 enemy3.rect.y = 700
 
@@ -84,7 +85,7 @@ while carryOn:
         #calculate distance between player and mummy and use for behaviour
         distance = math.hypot(enemy.rect.x-playerplayer.rect.x, enemy.rect.y-playerplayer.rect.y)
         #print("distance ", +distance)
-        if distance < 300: #later mummies could detect player in larger distance
+        if distance < 400: #later mummies could detect player in larger distance
             enemy.chase(playerplayer, distance)
         else:
             enemy.update()
@@ -114,7 +115,7 @@ while carryOn:
 
 
 #DRAWING ON SCREEN
-    screen.fill(WHITE)
+    screen.fill(SAND)
     all_enemy_sprites.draw(screen)
     all_sprites_list.draw(screen)
     all_treasure_list.draw(screen)
@@ -130,3 +131,4 @@ pygame.quit()
 #CITATIONS
 #code for treasure collisions: https://stackoverflow.com/questions/29640685/how-do-i-detect-collision-in-pygame
 #code for enemy chase function: https://stackoverflow.com/questions/10971671/how-to-make-an-enemy-follow-a-player-in-pygame/10971710
+#code to help with more accurate collisions: http://kidscancode.org/blog/2016/08/pygame_shmup_part_5/

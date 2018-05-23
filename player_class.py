@@ -11,7 +11,7 @@ class player(pygame.sprite.Sprite):
         super().__init__()
 
         #self.image = pygame.Surface([width, height])
-        self.image=pygame.image.load('robber.jpg').convert()
+        self.image=pygame.image.load('pixelRobber.png').convert()
         self.image.set_colorkey(WHITE)
         self.image=pygame.transform.scale(self.image,(width,height))
         
@@ -24,6 +24,8 @@ class player(pygame.sprite.Sprite):
         #pygame.draw.rect(self.image, self.color, [0,0,self.width,self.height])
 
         self.rect = self.image.get_rect()
+        self.radius = 25
+        pygame.draw.circle(self.image,BLACK, self.rect.center, self.radius)
 
     def moveRight(self, pixels):
         self.rect.x += pixels
