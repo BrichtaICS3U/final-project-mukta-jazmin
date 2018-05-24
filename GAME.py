@@ -23,7 +23,7 @@ pygame.display.set_caption("...'")
 
 all_sprites_list = pygame.sprite.Group()
                            
-playerplayer = player(280,180,70)
+playerplayer = player(50,45,70)
 playerplayer.rect.x = 0
 playerplayer.rect.y = 0
 
@@ -96,10 +96,14 @@ while carryOn:
         artifact_counter += 1
     all_sprites_list.update()
 
-    hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
-    if hit:
-        print("game over")
-        carryOn=False
+##    hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
+##    if hit:
+##        print("game over")
+##        carryOn=False
+
+    hits = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, False, pygame.sprite.collide_circle)
+    if hits:
+        carryOn = False
 
     fontTitle = pygame.font.Font('freesansbold.ttf', 20)
     textSurfaceTitle = fontTitle.render('Score: ' + str(artifact_counter), True, BLACK) 

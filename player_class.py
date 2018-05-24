@@ -25,7 +25,7 @@ class player(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.radius = 25
-        pygame.draw.circle(self.image,BLACK, self.rect.center, self.radius)
+        #pygame.draw.circle(self.image,BLACK, self.rect.center, self.radius)
 
     def moveRight(self, pixels):
         self.rect.x += pixels

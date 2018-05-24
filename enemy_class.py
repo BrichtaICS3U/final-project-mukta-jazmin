@@ -16,7 +16,7 @@ class enemy(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect()
         self.radius = 25
-        pygame.draw.circle(self.image,BLACK, self.rect.center, self.radius)
+        #pygame.draw.circle(self.image,BLACK, self.rect.center, self.radius)
 
         self.width = width
         self.height = height
