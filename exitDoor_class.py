@@ -6,7 +6,7 @@ class exitDoor(pygame.sprite.Sprite):
     def __init__(self, width, height):
         super().__init__()
 
-        self.image=pygame.image.load('images.png').convert()
+        self.image=pygame.image.load('pixelDoor.png').convert()
         self.image=pygame.transform.scale(self.image,(width,height))
         self.image.set_colorkey(WHITE)
 

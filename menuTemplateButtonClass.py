@@ -16,7 +16,8 @@ SCREENHEIGHT = 800
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
 
-#background = pygame.image.load("background.jpg")
+background = pygame.image.load("menuBackground.jpg!d")
+background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
 
 fontTitle = pygame.font.Font('freesansbold.ttf', 55)
 textSurfaceTitle = fontTitle.render('tbd', True, BLACK) 
@@ -126,19 +127,19 @@ clock = pygame.time.Clock()
 
 #create button objects and store in buttons list
 button_play = Button("Play", (SCREENWIDTH/2, SCREENHEIGHT/3), my_play_function)
-button_setting  = Button("Previous", (SCREENWIDTH/2, SCREENHEIGHT/3), my_previous_function)
+button_setting  = Button("Settings", (SCREENWIDTH/2, SCREENHEIGHT/3), my_setting_function)
 button_quit = Button("Quit", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
-button_back = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
-button_soundon = Button("Sound On", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
-button_soundoff = Button("Sound Off", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
-button_restart = Button("Restart", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
-button_menu = Button("Menu", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
+button_back = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3),my_previous_function, bg=(50, 200, 20))
+button_soundon = Button("Sound On", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_soundon_function, bg=(50, 200, 20))
+button_soundoff = Button("Sound Off", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_soundoff_function, bg=(50, 200, 20))
+#button_restart = Button("Restart", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
+#button_menu = Button("Menu", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
 
 
 
 #arrange button groups depending on level
-level1_buttons = [button_01, button_03]
-level2_buttons = [button_02, button_03]
+level1_buttons = [button_play, button_setting,button_quit]
+level2_buttons = [button_back, button_soundon,button_soundoff ]
 
 #---------Main Program Loop----------
 while carryOn:
@@ -154,7 +155,7 @@ while carryOn:
     # --- Draw code goes here
 
     # Clear the screen to white
-    screen.fill(WHITE)
+    screen.blit(background, (0, 0))
 
     # Draw buttons
     if level == 1:

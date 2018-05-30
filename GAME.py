@@ -23,11 +23,11 @@ pygame.display.set_caption("...'")
 
 all_sprites_list = pygame.sprite.Group()
                            
-playerplayer = player(50,45,70)
+playerplayer = player(75,70,70)
 playerplayer.rect.x = 0
 playerplayer.rect.y = 0
 
-treasure1 = Treasure(100,120)
+treasure1 = Treasure(60,80)
 treasure1.rect.x = 500
 treasure1.rect.y = 500
 
@@ -43,14 +43,24 @@ enemy3 = enemy(60, 70, 40)
 enemy3.rect.x = 100
 enemy3.rect.y = 700
 
+enemy4 = enemy(60, 70, 40)
+enemy4.rect.x = 10
+enemy4.rect.y = 700
+
+enemy5 = enemy(60, 70, 40)
+enemy5.rect.x = 1000
+enemy5.rect.y = 70
+
 exitDoor = exitDoor(100,120)
 exitDoor.rect.x = 900
 exitDoor.rect.y = 600
 
+#wall2 = wall(SCREENWIDTH/3, 0)
+
 all_enemy_sprites = pygame.sprite.Group()
 all_treasure_list = pygame.sprite.Group()
 all_exitDoor_list = pygame.sprite.Group()
-all_enemy_sprites.add(enemy1, enemy2, enemy3)
+all_enemy_sprites.add(enemy1, enemy2, enemy3, enemy4, enemy5)
 
 
 all_sprites_list.add(playerplayer)
@@ -94,7 +104,11 @@ while carryOn:
     if point:
         print ("You picked up the treasure!")
         artifact_counter += 1
-    all_sprites_list.update()
+    escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, False)
+    if artifact_counter == 1 and escape:
+        print('YOU HAVE ESCAPED')
+        carryOn=False
+
 
 ##    hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
 ##    if hit:
@@ -112,19 +126,15 @@ while carryOn:
 
     pygame.display.update()
 
-    escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, True)
-    if escape:
-        print('YOU HAVE ESCAPED')
-        carryOn=False
-
 
 #DRAWING ON SCREEN
     screen.fill(SAND)
+    all_exitDoor_list.draw(screen)
+    all_treasure_list.draw(screen)
     all_enemy_sprites.draw(screen)
     all_sprites_list.draw(screen)
-    all_treasure_list.draw(screen)
     screen.blit(textSurfaceTitle, textRectTitle)
-    all_exitDoor_list.draw(screen)
+    
 
     pygame.display.flip()
 

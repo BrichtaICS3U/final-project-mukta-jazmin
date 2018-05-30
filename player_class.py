@@ -11,8 +11,8 @@ class player(pygame.sprite.Sprite):
         super().__init__()
 
         #self.image = pygame.Surface([width, height])
-        self.image=pygame.image.load('pixelRobber.png').convert()
-        self.image.set_colorkey(WHITE)
+        self.image=pygame.image.load('camelRobber.png').convert()
+        self.image.set_colorkey(BLACK)
         self.image=pygame.transform.scale(self.image,(width,height))
         
 

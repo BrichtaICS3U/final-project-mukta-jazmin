@@ -58,13 +58,13 @@ class enemy(pygame.sprite.Sprite):
         #prevent mummies from walking off screen
         if  self.rect.x < 0:
             self.rect.x=0
-        elif self.rect.x > 1000:
-           self.rect.x=1000
+        elif self.rect.x > 990:
+           self.rect.x=990
             
         if  self.rect.y < 0:
             self.rect.y=0
-        elif self.rect.y > 800:
-            self.rect.y=800
+        elif self.rect.y > 790:
+            self.rect.y=790
 
     def chase(self, player, distance):
         """This method allows the mummy to chase the player."""
