@@ -39,17 +39,19 @@ class enemy(pygame.sprite.Sprite):
         self.speed = speed
 
 
-    def update(self):
+    def update(self, walls):
         """This method will choose a pseudo-random walk for the mummy."""
         if self.steps <=0:
             self.steps = random.randint(5,10)
-            self.direction = random.randint(1,4)
+            self.direction = random.randint(-2,2)
         else:
             if self.direction ==1:
                 self.rect.x += 5
-            elif self.direction == 2:
+            elif self.direction == -1:
                 self.rect.x -= 5
-            elif self.direction == 3:
+            elif self.direction == 0: # do nothing because mummies are dumb
+                self.rect.x = self.rect.x
+            elif self.direction == 2:
                 self.rect.y +=5
             else:
                 self.rect.y-= 5
@@ -66,12 +68,25 @@ class enemy(pygame.sprite.Sprite):
         elif self.rect.y > 790:
             self.rect.y=790
 
-    def chase(self, player, distance):
+        #prevent enemies from moving through walls
+        if pygame.sprite.spritecollide(self, walls, False):
+            self.direction = -self.direction
+
+    def chase(self, player, distance, walls):
         """This method allows the mummy to chase the player."""
         dx = (player.rect.x - self.rect.x)/distance
         dy = (player.rect.y - self.rect.y)/distance
-        self.rect.x += dx*self.speed
-        self.rect.y += dy*self.speed
+
+        #prevent movement through walls
+        
+        if pygame.sprite.spritecollide(self, walls, False):
+            self.rect.x -= dx*self.speed
+            self.rect.y -= dy*self.speed
+
+        else:
+            
+            self.rect.x += dx*self.speed
+            self.rect.y += dy*self.speed
 
     
 
