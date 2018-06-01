@@ -10,7 +10,8 @@ YELLOW = (233, 215, 88)
 BLACK = (57, 57, 58)
 ORANGE = (255, 133, 82)
 BLUE = (41, 115, 115)
-SANDORANGE: (196, 100, 40)
+SANDORANGE = (196, 100, 40)
+TRANSPARENT = (255, 255, 255, 100)
 
 SCREENWIDTH = 1200
 SCREENHEIGHT = 800
@@ -23,12 +24,17 @@ background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
 fontTitle = pygame.font.Font('freesansbold.ttf', 55)
 textSurfaceTitle = fontTitle.render('tbd', True, BLACK) 
 textRectTitle = textSurfaceTitle.get_rect()
-textRectTitle.center = (400, 100)   # place the centre of the text
+textRectTitle.center = (600, 150)   # place the centre of the text
 
 fontSetting = pygame.font.Font('freesansbold.ttf', 55)
-textSurfaceSetting = fontSetting.render('Settings', True, BLACK) 
+textSurfaceSetting = fontSetting.render('SETTINGS', True, BLACK) 
 textRectSetting = textSurfaceSetting.get_rect()
-textRectSetting.center = (400, 100)   # place the centre of the text
+textRectSetting.center = (600, 125)   # place the centre of the text
+
+fontSound = pygame.font.Font('freesansbold.ttf', 40)
+textSurfaceSound = fontSound.render('SOUND: ', True, BLACK) 
+textRectSound = textSurfaceSound.get_rect()
+textRectSound.center = (125, 245)   # place the centre of the text
 
 pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=4096)
 pygame.mixer.music.load('Ancient Egyptian Music - Hathor.mp3')
@@ -82,12 +88,12 @@ class Button():
 def my_play_function():
     """A function that advances player to instruction screen"""
     global level
-    level += 1
+    level += 2
 
 def my_setting_function():
     """A function that advances to the settings"""
     global level
-    level += 2
+    level += 1
 
 def my_next_function():
     """A function that advances to the next level"""
@@ -97,7 +103,7 @@ def my_next_function():
 def my_previous_function():
     """A function that retreats to the previous level"""
     global level
-    level == 1
+    level -= 1
 
 def my_soundon_function():
     """A function that turns sound on"""
@@ -113,6 +119,14 @@ def my_quit_function():
     """A function that will quit the game and close the pygame window"""
     pygame.quit()
     sys.exit()
+
+def my_restart_function():
+    """A function that will bring player back to start of game"""
+    level == 3
+
+def my_menu_function():
+    """A function that brings player back to menu screen"""
+    level == 1 
 
 def mousebuttondown(level):
     """A function that checks which button was pressed"""
@@ -131,20 +145,21 @@ carryOn = True
 clock = pygame.time.Clock()
 
 #create button objects and store in buttons list
-button_play = Button("Play", (SCREENWIDTH/3, SCREENHEIGHT/6*3.5), my_play_function, bg =  (196, 100, 40))
-button_setting  = Button("Settings", (SCREENWIDTH/3*2, SCREENHEIGHT/6*3.5), my_setting_function, bg= (196, 100, 40))
-button_quit = Button("Quit", (SCREENWIDTH/2, SCREENHEIGHT/4*3), my_quit_function, bg= (196, 100, 40))
-button_back = Button("Back", (SCREENWIDTH/2, SCREENHEIGHT*2/3),my_previous_function, bg=(50, 200, 20))
-button_soundon = Button("Sound On", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_soundon_function, bg=(50, 200, 20))
-button_soundoff = Button("Sound Off", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_soundoff_function, bg=(50, 200, 20))
-#button_restart = Button("Restart", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
-#button_menu = Button("Menu", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_quit_function, bg=(50, 200, 20))
-
+button_play = Button("PLAY", (SCREENWIDTH/3, SCREENHEIGHT/6*3.5), my_play_function, bg =  (196, 100, 40))
+button_setting  = Button("SETTINGS", (SCREENWIDTH/3*2, SCREENHEIGHT/6*3.5), my_setting_function, bg= (196, 100, 40))
+button_quit = Button("QUIT", (SCREENWIDTH/2, SCREENHEIGHT/4*3), my_quit_function, bg= (196, 100, 40))
+button_next = Button("NEXT", (SCREENWIDTH*7/8 + 40, SCREENHEIGHT*7/8),my_next_function, bg=(50, 200, 20))
+button_back = Button("BACK", (SCREENWIDTH/8 - 40, SCREENHEIGHT*7/8),my_previous_function, bg=(50, 200, 20))
+button_soundon = Button("ON", (SCREENWIDTH/3, SCREENHEIGHT/3 - 25), my_soundon_function, bg=(50, 200, 20))
+button_soundoff = Button("OFF", (SCREENWIDTH/2 + 100, SCREENHEIGHT/3 - 25), my_soundoff_function, bg=(50, 200, 20))
+button_restart = Button("RESTART", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_restart_function, bg=(50, 200, 20))
+button_menu = Button("MENU", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_menu_function, bg=(50, 200, 20))
 
 
 #arrange button groups depending on level
 level1_buttons = [button_play, button_setting,button_quit]
-level2_buttons = [button_back, button_soundon,button_soundoff ]
+level2_buttons = [button_back, button_soundon, button_soundoff]
+level3_buttons = [button_back, button_next]
 
 #---------Main Program Loop----------
 while carryOn:
@@ -166,8 +181,14 @@ while carryOn:
     if level == 1:
         for button in level1_buttons:
             button.draw()
+        screen.blit(textSurfaceTitle, textRectTitle)
     elif level == 2:
         for button in level2_buttons:
+            button.draw()
+        screen.blit(textSurfaceSetting, textRectSetting)
+        screen.blit(textSurfaceSound, textRectSound)
+    elif level == 3:
+        for button in level3_buttons:
             button.draw()
 
     # Update the screen with queued shapes
