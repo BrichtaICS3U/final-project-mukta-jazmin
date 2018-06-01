@@ -3,6 +3,7 @@ from player_class import player
 from treasure_class import Treasure
 from enemy_class import enemy
 from exitDoor_class import exitDoor
+from wall_class import wall
 pygame.init()
 
 PURPLE = (255, 0, 255)
@@ -10,6 +11,7 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BLACK = (0, 0, 0)
 SAND = (247, 231, 173)
+WALLCOLOUR = (173, 99, 3)
 
 speed = 1
 artifact_counter = 0
@@ -27,9 +29,13 @@ playerplayer = player(75,70,70)
 playerplayer.rect.x = 0
 playerplayer.rect.y = 0
 
-treasure1 = Treasure(100,250)
-treasure1.rect.x = 300
-treasure1.rect.y = 300
+treasure1 = Treasure(60, 80)
+treasure1.rect.x = 900
+treasure1.rect.y = 100
+
+treasure2 = Treasure(60,80)
+treasure2.rect.x = 550
+treasure2.rect.y = 700
 
 enemy1 = enemy(60, 70, 40)
 enemy1.rect.x = 500
@@ -52,22 +58,42 @@ enemy5.rect.x = 1000
 enemy5.rect.y = 70
 
 exitDoor = exitDoor(100,120)
-exitDoor.rect.x = 900
-exitDoor.rect.y = 600
+exitDoor.rect.x = 1075
+exitDoor.rect.y = 650
 
-#wall2 = wall(SCREENWIDTH/3, 0)
+wall1 = wall(WALLCOLOUR, 25,250)
+wall1.rect.x= SCREENWIDTH/3
+wall1.rect.y=0
 
+wall2 = wall(WALLCOLOUR, 25, 250)
+wall2.rect.x = SCREENWIDTH/3*2
+wall2.rect.y=0
+
+wall3 = wall(WALLCOLOUR, 25, 250)
+wall3.rect.x = SCREENWIDTH/3
+wall3.rect.y=550
+
+wall4 = wall(WALLCOLOUR, 25, 250)
+wall4.rect.x = SCREENWIDTH/3*2
+wall4.rect.y=550
+
+wall5 = wall(WALLCOLOUR, 1000, 25)
+wall5.rect.x = SCREENWIDTH/12
+wall5.rect.y=SCREENHEIGHT/2
+
+
+#all_player_list = pygame.sprite.Group()
 all_enemy_sprites = pygame.sprite.Group()
 all_treasure_list = pygame.sprite.Group()
 all_exitDoor_list = pygame.sprite.Group()
+all_walls_list=pygame.sprite.Group()
 all_enemy_sprites.add(enemy1, enemy2, enemy3, enemy4, enemy5)
 
 
 all_sprites_list.add(playerplayer)
-#leave enemies in their own group
-#all_sprites_list.add(enemy1,enemy2, enemy3)
-all_treasure_list.add(treasure1)
+all_treasure_list.add(treasure2)
 all_exitDoor_list.add(exitDoor)
+all_walls_list.add(wall1,wall2, wall3,wall4,wall5)
 
 carryOn = True
 clock = pygame.time.Clock()
@@ -90,15 +116,16 @@ while carryOn:
 
                                 
 #GAME LOGIC
+    playerplayer.update(all_walls_list)
 
     for enemy in all_enemy_sprites:
         #calculate distance between player and mummy and use for behaviour
         distance = math.hypot(enemy.rect.x-playerplayer.rect.x, enemy.rect.y-playerplayer.rect.y)
         #print("distance ", +distance)
         if distance < 400: #later mummies could detect player in larger distance
-            enemy.chase(playerplayer, distance)
+            enemy.chase(playerplayer, distance, all_walls_list)
         else:
-            enemy.update()
+            enemy.update(all_walls_list)
 
     point= pygame.sprite.spritecollide(playerplayer, all_treasure_list, True)
     if point:
@@ -108,12 +135,6 @@ while carryOn:
     if artifact_counter == 1 and escape:
         print('YOU HAVE ESCAPED')
         carryOn=False
-
-
-##    hit = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, True)
-##    if hit:
-##        print("game over")
-##        carryOn=False
 
     hits = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, False, pygame.sprite.collide_circle)
     if hits:
@@ -129,8 +150,9 @@ while carryOn:
 
 #DRAWING ON SCREEN
     screen.fill(SAND)
-    all_exitDoor_list.draw(screen)
     all_treasure_list.draw(screen)
+    all_walls_list.draw(screen)
+    all_exitDoor_list.draw(screen)
     all_enemy_sprites.draw(screen)
     all_sprites_list.draw(screen)
     screen.blit(textSurfaceTitle, textRectTitle)

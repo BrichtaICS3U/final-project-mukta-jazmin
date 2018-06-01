@@ -2,8 +2,9 @@ import pygame
 WHITE = (255, 255, 255)
 BLACK = (0,0,0)
 
-SCREENWIDTH = 0
-SCREENHEIGHT = 0
+SCREENWIDTH = 1200
+SCREENHEIGHT = 800
+
 
 class player(pygame.sprite.Sprite):
 
@@ -42,13 +43,18 @@ class player(pygame.sprite.Sprite):
     def changeSpeed(self,speed):
         self.speed = speed
 
-    def update(self):
-        if  self.rect.x < 600 - 625:
-            self.rect.x= 600 - 625
-        elif self.rect.x > 600 + 580:
-            self.rect.x=600 + 580 
+    def update(self,walls):
+        if  self.rect.x < 0 :
+            self.rect.x= 0 
+        elif self.rect.x >1200-self.width:
+            self.rect.x=1200 - self.width
             
-        if  self.rect.y < 400 - 410:
-            self.rect.y=400 - 410
-        elif self.rect.y > 400 + 325:
-            self.rect.y= 400 + 325
+        if  self.rect.y < 0 :
+            self.rect.y=0
+        elif self.rect.y > 800-self.height :
+            self.rect.y= 800-self.height
+
+        #prevent player from moving through walls
+        if pygame.sprite.spritecollide(self, walls, False):
+            self.rect.x = self.rect.x- self.width
+            self.rect.y = self.rect.y- self.height
