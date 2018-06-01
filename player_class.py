@@ -28,22 +28,35 @@ class player(pygame.sprite.Sprite):
         self.radius = 25
         #pygame.draw.circle(self.image,BLACK, self.rect.center, self.radius)
 
-    def moveRight(self, pixels):
+    def moveRight(self, pixels, walls):
         self.rect.x += pixels
+        for wall in walls:
+            if (pygame.sprite.collide_rect(self,wall)):
+                self.rect.x -= pixels
 
-    def moveLeft(self,pixels):
+    def moveLeft(self,pixels,walls):
         self.rect.x -= pixels
+        for wall in walls:
+            if (pygame.sprite.collide_rect(self,wall)):
+                self.rect.x += pixels
 
-    def moveForward(self, speed):
+    def moveForward(self, speed,walls):
         self.rect.y += self.speed*speed/40
+        for wall in walls:
+            if (pygame.sprite.collide_rect(self,wall)):
+                self.rect.y -= self.speed*speed/40
 
-    def moveBackward(self,speed):
+    def moveBackward(self,speed,walls):
         self.rect.y -= self.speed*speed/40
+        for wall in walls:
+            if (pygame.sprite.collide_rect(self,wall)):
+                self.rect.y += self.speed*speed/40
+
 
     def changeSpeed(self,speed):
         self.speed = speed
 
-    def update(self,walls):
+    def update(self):
         if  self.rect.x < 0 :
             self.rect.x= 0 
         elif self.rect.x >1200-self.width:
@@ -55,6 +68,6 @@ class player(pygame.sprite.Sprite):
             self.rect.y= 800-self.height
 
         #prevent player from moving through walls
-        if pygame.sprite.spritecollide(self, walls, False):
-            self.rect.x = self.rect.x- self.width
-            self.rect.y = self.rect.y- self.height
+##        if pygame.sprite.spritecollide(self, walls, False):
+##            self.rect.x = self.rect.x- self.width
+##            self.rect.y = self.rect.y- self.height

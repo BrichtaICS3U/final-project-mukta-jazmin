@@ -4,6 +4,8 @@ from treasure_class import Treasure
 from enemy_class import enemy
 from exitDoor_class import exitDoor
 from wall_class import wall
+from cat_class import  Cat
+ 
 pygame.init()
 
 PURPLE = (255, 0, 255)
@@ -65,25 +67,33 @@ exitDoor = exitDoor(100,120)
 exitDoor.rect.x = 1075
 exitDoor.rect.y = 650
 
-wall1 = wall(WALLCOLOUR, 25,250)
+wall1 = wall(WALLCOLOUR, 250,250)
 wall1.rect.x= SCREENWIDTH/3
-wall1.rect.y=0
+wall1.rect.y=100
 
-wall2 = wall(WALLCOLOUR, 25, 250)
+wall2 = wall(WALLCOLOUR, 250, 25)
 wall2.rect.x = SCREENWIDTH/3*2
-wall2.rect.y=0
+wall2.rect.y=75
 
-wall3 = wall(WALLCOLOUR, 25, 250)
+wall3 = wall(WALLCOLOUR, 250, 25)
 wall3.rect.x = SCREENWIDTH/3
-wall3.rect.y=550
+wall3.rect.y=600
 
-wall4 = wall(WALLCOLOUR, 25, 250)
+wall4 = wall(WALLCOLOUR, 100, 250)
 wall4.rect.x = SCREENWIDTH/3*2
 wall4.rect.y=550
 
-wall5 = wall(WALLCOLOUR, 1000, 25)
-wall5.rect.x = SCREENWIDTH/12
+wall5 = wall(WALLCOLOUR, 100, 400)
+wall5.rect.x = 0
 wall5.rect.y=SCREENHEIGHT/2
+
+wall6 = wall(WALLCOLOUR, 100, 250)
+wall6.rect.x = 900
+wall6.rect.y=SCREENHEIGHT/2
+
+cat1 = Cat (60,80)
+cat1.rect.x = 50
+cat1.rect.y = 50
 
 
 #all_player_list = pygame.sprite.Group()
@@ -91,12 +101,15 @@ all_enemy_sprites = pygame.sprite.Group()
 all_treasure_list = pygame.sprite.Group()
 all_exitDoor_list = pygame.sprite.Group()
 all_walls_list=pygame.sprite.Group()
+all_cats_list=pygame.sprite.Group()
+
 
 all_enemy_sprites.add(enemy1, enemy2, enemy3, enemy4, enemy5)
 all_sprites_list.add(playerplayer)
 all_treasure_list.add(treasure2, treasure1, treasure3)
 all_exitDoor_list.add(exitDoor)
-all_walls_list.add(wall1,wall2, wall3,wall4,wall5)
+all_walls_list.add(wall1,wall2, wall3,wall4,wall5, wall6)
+all_cats_list.add(cat1)
 
 carryOn = True
 clock = pygame.time.Clock()
@@ -104,7 +117,7 @@ clock = pygame.time.Clock()
 while carryOn:
     for event in pygame.event.get():
         if event.type==pygame.QUIT:
-           carryOn= False
+            carryOn= False
 
     keys = pygame.key.get_pressed()
     if  keys[pygame.K_a]:
@@ -158,6 +171,7 @@ while carryOn:
     all_exitDoor_list.draw(screen)
     all_enemy_sprites.draw(screen)
     all_sprites_list.draw(screen)
+    all_cats_list.draw(screen)
     screen.blit(textSurfaceTitle, textRectTitle)
     
 
@@ -171,3 +185,4 @@ pygame.quit()
 #code for treasure collisions: https://stackoverflow.com/questions/29640685/how-do-i-detect-collision-in-pygame
 #code for enemy chase function: https://stackoverflow.com/questions/10971671/how-to-make-an-enemy-follow-a-player-in-pygame/10971710
 #code to help with more accurate collisions: http://kidscancode.org/blog/2016/08/pygame_shmup_part_5/
+
