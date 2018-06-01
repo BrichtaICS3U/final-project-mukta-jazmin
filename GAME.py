@@ -29,7 +29,9 @@ playerplayer = player(75,70,70)
 playerplayer.rect.x = 0
 playerplayer.rect.y = 0
 
-treasure1 = Treasure(60,80)
+
+
+treasure1 = Treasure(60, 80)
 treasure1.rect.x = 900
 treasure1.rect.y = 100
 
