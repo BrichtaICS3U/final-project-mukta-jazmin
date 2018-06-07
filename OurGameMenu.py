@@ -2,7 +2,6 @@
 # Adapted from http://www.dreamincode.net/forums/topic/401541-buttons-and-sliders-in-pygame/
 
 import pygame, sys
-from GAME import Game
 pygame.init()
 
 #print (pygame.font.get_fonts())
@@ -91,25 +90,31 @@ class Button():
 def my_play_function():
     """A function that advances player to instruction screen"""
     global level
-    level += 2
+    level += 1
     print(level)
-    if level ==6:
-       Game()
+
 
 def my_setting_function():
     """A function that advances to the settings"""
     global level
-    level += 1
+    level += 3
+    print(level)
 
 def my_next_function():
     """A function that advances to the next level"""
     global level
     level += 1
+    print(level)
 
 def my_previous_function():
     """A function that retreats to the previous level"""
     global level
-    level -= 1
+    level -= 3
+    print(level)
+
+def PlayTheGame():
+    global level
+    level += 2
 
 def my_soundon_function():
     """A function that turns sound on"""
@@ -170,13 +175,14 @@ button_soundon = Button("ON", (SCREENWIDTH/3, SCREENHEIGHT/3 - 25), my_soundon_f
 button_soundoff = Button("OFF", (SCREENWIDTH/2 + 100, SCREENHEIGHT/3 - 25), my_soundoff_function, bg=(196, 100, 40))
 button_restart = Button("RESTART", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_restart_function, bg=(196, 100, 40))
 button_menu = Button("MENU", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_menu_function, bg=(196, 100, 40))
+PlayTheGame = Button("PLAY", (SCREENWIDTH*7/8 + 40, SCREENHEIGHT*7/8), my_play_function, bg =  (196, 100, 40))
 
 
 #arrange button groups depending on level
 level1_buttons = [button_play, button_setting,button_quit]
-level2_buttons = [button_back, button_soundon, button_soundoff]
-level3_buttons = [button_back2, button_next]
-level4_buttons = [button_back, button_play]
+level4_buttons = [button_back, button_soundon, button_soundoff]
+level2_buttons = [button_back2, button_next]
+level3_buttons = [button_back, PlayTheGame]
 
 #---------Main Program Loop----------
 while carryOn:
@@ -199,20 +205,24 @@ while carryOn:
         for button in level1_buttons:
             button.draw()
         screen.blit(textSurfaceTitle, textRectTitle)
+        background = pygame.image.load("OurMenuBackground.png")
+        background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
     elif level == 2:
         for button in level2_buttons:
             button.draw()
-        screen.blit(textSurfaceSetting, textRectSetting)
-        screen.blit(textSurfaceSound, textRectSound)
+            background = pygame.image.load("Instruction Page 1.png")
+            background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
     elif level == 3:
         for button in level3_buttons:
             button.draw()
-            background = pygame.image.load("FINAL Instruction Page 1 . png")
+            background = pygame.image.load("unnamed.png")
             background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
     elif level == 4:
         for button in level4_buttons:
             button.draw()
-            background = pygame.image.load("FINAL Instruction Page 1 . png")
+            screen.blit(textSurfaceSetting, textRectSetting)
+            screen.blit(textSurfaceSound, textRectSound)
+            background = pygame.image.load("OurMenuBackground.png")
             background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
         
 
