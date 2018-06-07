@@ -23,6 +23,10 @@ size = (SCREENWIDTH, SCREENHEIGHT)
 screen= pygame.display.set_mode(size)
 pygame.display.set_caption("...'")
 
+pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=4096)
+pygame.mixer.music.load('The Pink Panther Theme Song (Original Version).mp3')
+pygame.mixer.music.play(-1) #-1 means loops for ever, 0 means play just once)
+
 all_sprites_list = pygame.sprite.Group()
                            
 playerplayer = player(75,70,70)
@@ -127,7 +131,7 @@ while carryOn:
         #calculate distance between player and mummy and use for behaviour
         distance = math.hypot(enemy.rect.x-playerplayer.rect.x, enemy.rect.y-playerplayer.rect.y)
         #print("distance ", +distance)
-        if distance < 400: #later mummies could detect player in larger distance
+        if distance < 200: #later mummies could detect player in larger distance
             enemy.chase(playerplayer, distance, all_walls_list)
         else:
             enemy.update(all_walls_list)
@@ -137,7 +141,7 @@ while carryOn:
         print ("You picked up the treasure!")
         artifact_counter += 1
     escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, False)
-    if artifact_counter == 2 and escape:
+    if artifact_counter == 3 and escape:
         print('YOU HAVE ESCAPED')
         carryOn=False
 

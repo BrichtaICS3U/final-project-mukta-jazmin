@@ -105,6 +105,11 @@ def my_previous_function():
     global level
     level -= 1
 
+def my_back_function():
+    """A function that retreats to the previous level"""
+    global level
+    level -= 2
+    
 def my_soundon_function():
     """A function that turns sound on"""
     print('sound is ON')
@@ -139,6 +144,12 @@ def mousebuttondown(level):
         for button in level2_buttons:
             if button.rect.collidepoint(pos):
                 button.call_back()
+    else:
+        for button in level3_buttons:
+            if button.rect.collidepoint(pos):
+                button.call_back()
+                    
+    
 
 level = 1
 carryOn = True
@@ -154,12 +165,12 @@ button_soundon = Button("ON", (SCREENWIDTH/3, SCREENHEIGHT/3 - 25), my_soundon_f
 button_soundoff = Button("OFF", (SCREENWIDTH/2 + 100, SCREENHEIGHT/3 - 25), my_soundoff_function, bg=(50, 200, 20))
 button_restart = Button("RESTART", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_restart_function, bg=(50, 200, 20))
 button_menu = Button("MENU", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_menu_function, bg=(50, 200, 20))
-
+button_playScreenBack = Button("BACK", (SCREENWIDTH/8 - 40, SCREENHEIGHT*7/8),my_back_function, bg=(50, 200, 20))
 
 #arrange button groups depending on level
 level1_buttons = [button_play, button_setting,button_quit]
 level2_buttons = [button_back, button_soundon, button_soundoff]
-level3_buttons = [button_back, button_next]
+level3_buttons = [button_playScreenBack, button_next]
 
 #---------Main Program Loop----------
 while carryOn:

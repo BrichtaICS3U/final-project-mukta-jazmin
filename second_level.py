@@ -56,7 +56,7 @@ enemy3.rect.x = 100
 enemy3.rect.y = 700
 
 enemy4 = enemy(60, 70, 40)
-enemy4.rect.x = 10
+enemy4.rect.x = 100
 enemy4.rect.y = 700
 
 enemy5 = enemy(60, 70, 40)
@@ -91,7 +91,7 @@ wall6 = wall(WALLCOLOUR, 100, 250)
 wall6.rect.x = 900
 wall6.rect.y=SCREENHEIGHT/2
 
-cat1 = Cat (60,80)
+cat1 = Cat (100,80)
 cat1.rect.x = 50
 cat1.rect.y = 50
 
@@ -148,13 +148,18 @@ while carryOn:
         print ("You picked up the treasure!")
         artifact_counter += 1
     escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, False)
-    if artifact_counter == 2 and escape:
+    if artifact_counter == 3 and escape:
         print('YOU HAVE ESCAPED')
         carryOn=False
 
     hits = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, False, pygame.sprite.collide_circle)
     if hits:
         carryOn = False
+
+    alert =  pygame.sprite.spritecollide(playerplayer, all_cats_list, False, pygame.sprite.collide_circle)
+    if alert:
+        enemy.chase(playerplayer, distance, all_walls_list)
+        
 
     fontTitle = pygame.font.Font('freesansbold.ttf', 20)
     textSurfaceTitle = fontTitle.render('Score: ' + str(artifact_counter), True, BLACK) 
