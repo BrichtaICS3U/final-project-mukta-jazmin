@@ -162,7 +162,7 @@ while carryOn:
     textRectTitle = textSurfaceTitle.get_rect()
     textRectTitle.center = (1100, 50) 
 
-    #pygame.display.update()
+
 
 
 #DRAWING ON SCREEN

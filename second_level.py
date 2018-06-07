@@ -25,6 +25,14 @@ size = (SCREENWIDTH, SCREENHEIGHT)
 screen= pygame.display.set_mode(size)
 pygame.display.set_caption("...'")
 
+pygame.mixer.pre_init(frequency=44100, size=-16, channels=2, buffer=4096)
+pygame.mixer.music.load('The Pink Panther Theme Song (Original Version).mp3')
+pygame.mixer.music.play(-1) #-1 means loops for ever, 0 means play just once)
+
+background = pygame.image.load("MainGameBackground.png")
+background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+
+
 all_sprites_list = pygame.sprite.Group()
                            
 playerplayer = player(75,70,70)
@@ -48,8 +56,8 @@ enemy1.rect.x = 500
 enemy1.rect.y = 500
 
 enemy2 = enemy(60, 70, 40)
-enemy2.rect.x = 1000
-enemy2.rect.y = 100
+enemy2.rect.x = 400
+enemy2.rect.y = 400
 
 enemy3 = enemy(60, 70, 40)
 enemy3.rect.x = 100
@@ -61,7 +69,11 @@ enemy4.rect.y = 700
 
 enemy5 = enemy(60, 70, 40)
 enemy5.rect.x = 1000
-enemy5.rect.y = 70
+enemy5.rect.y = 100
+
+enemy6 = enemy(60, 70, 40)
+enemy6.rect.x = 300
+enemy6.rect.y = 200
 
 exitDoor = exitDoor(100,120)
 exitDoor.rect.x = 1075
@@ -92,8 +104,16 @@ wall6.rect.x = 900
 wall6.rect.y=SCREENHEIGHT/2
 
 cat1 = Cat (100,80)
-cat1.rect.x = 50
-cat1.rect.y = 50
+cat1.rect.x = 100
+cat1.rect.y = 625
+
+cat2 = Cat (100,80)
+cat2.rect.x = 500
+cat2.rect.y = 500
+
+cat3 = Cat (100,80)
+cat3.rect.x = 700
+cat3.rect.y = 50
 
 
 #all_player_list = pygame.sprite.Group()
@@ -104,12 +124,12 @@ all_walls_list=pygame.sprite.Group()
 all_cats_list=pygame.sprite.Group()
 
 
-all_enemy_sprites.add(enemy1, enemy2, enemy3, enemy4, enemy5)
+all_enemy_sprites.add(enemy1, enemy2, enemy3, enemy4, enemy5,enemy6)
 all_sprites_list.add(playerplayer)
 all_treasure_list.add(treasure2, treasure1, treasure3)
 all_exitDoor_list.add(exitDoor)
 all_walls_list.add(wall1,wall2, wall3,wall4,wall5, wall6)
-all_cats_list.add(cat1)
+all_cats_list.add(cat1, cat2, cat3)
 
 carryOn = True
 clock = pygame.time.Clock()
@@ -147,14 +167,20 @@ while carryOn:
     if point:
         print ("You picked up the treasure!")
         artifact_counter += 1
+
+    alive = True
+
     escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, False)
     if artifact_counter == 3 and escape:
-        print('YOU HAVE ESCAPED')
-        carryOn=False
+        background = pygame.image.load("cartoon-of-small-oasis-in-the-desert-vector-12132077.png")
+        background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+        alive = False       
 
     hits = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, False, pygame.sprite.collide_circle)
     if hits:
-        carryOn = False
+        background = pygame.image.load("FINAL MUMMY SCREEN.png")
+        background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+        alive = False
 
     alert =  pygame.sprite.spritecollide(playerplayer, all_cats_list, False, pygame.sprite.collide_circle)
     if alert:
@@ -170,14 +196,16 @@ while carryOn:
 
 
 #DRAWING ON SCREEN
-    screen.fill(SAND)
-    all_treasure_list.draw(screen)
-    all_walls_list.draw(screen)
-    all_exitDoor_list.draw(screen)
-    all_enemy_sprites.draw(screen)
-    all_sprites_list.draw(screen)
-    all_cats_list.draw(screen)
-    screen.blit(textSurfaceTitle, textRectTitle)
+    screen.blit(background, (0, 0))
+
+    if (alive):
+        all_treasure_list.draw(screen)
+        all_walls_list.draw(screen)
+        all_exitDoor_list.draw(screen)
+        all_enemy_sprites.draw(screen)
+        all_sprites_list.draw(screen)
+        all_cats_list.draw(screen)
+        screen.blit(textSurfaceTitle, textRectTitle)
     
 
     pygame.display.flip()

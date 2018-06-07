@@ -112,9 +112,9 @@ def my_previous_function():
     level -= 3
     print(level)
 
-def PlayTheGame():
-    global level
-    level += 2
+##def PlayTheGame():
+##    global level
+    
 
 def my_back_function():
     """A function that retreats to the previous level"""
@@ -179,14 +179,13 @@ button_soundon = Button("ON", (SCREENWIDTH/3, SCREENHEIGHT/3 - 25), my_soundon_f
 button_soundoff = Button("OFF", (SCREENWIDTH/2 + 100, SCREENHEIGHT/3 - 25), my_soundoff_function, bg=(196, 100, 40))
 button_restart = Button("RESTART", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_restart_function, bg=(196, 100, 40))
 button_menu = Button("MENU", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_menu_function, bg=(196, 100, 40))
-PlayTheGame = Button("PLAY", (SCREENWIDTH*7/8 + 40, SCREENHEIGHT*7/8), my_play_function, bg =  (196, 100, 40))
+##PlayTheGame = Button("PLAY", (SCREENWIDTH*7/8 + 40, SCREENHEIGHT*7/8), my_play_function, bg =  (196, 100, 40))
 
 #arrange button groups depending on level
 level1_buttons = [button_play, button_setting,button_quit]
 level4_buttons = [button_back, button_soundon, button_soundoff]
 level2_buttons = [button_back2, button_next]
-level3_buttons = [button_back, PlayTheGame]
-
+level3_buttons = [button_back]
 
 #---------Main Program Loop----------
 while carryOn:
@@ -228,6 +227,7 @@ while carryOn:
             screen.blit(textSurfaceSound, textRectSound)
             background = pygame.image.load("OurMenuBackground.png")
             background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+   
         
 
         
