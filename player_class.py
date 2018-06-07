@@ -67,7 +67,5 @@ class player(pygame.sprite.Sprite):
         elif self.rect.y > 800-self.height :
             self.rect.y= 800-self.height
 
-        #prevent player from moving through walls
-##        if pygame.sprite.spritecollide(self, walls, False):
-##            self.rect.x = self.rect.x- self.width
-##            self.rect.y = self.rect.y- self.height
+
+

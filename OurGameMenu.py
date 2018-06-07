@@ -4,6 +4,8 @@
 import pygame, sys
 pygame.init()
 
+#print (pygame.font.get_fonts())
+
 # Define some colours
 WHITE = (230, 230, 230)
 YELLOW = (233, 215, 88)
@@ -21,17 +23,17 @@ screen = pygame.display.set_mode(size)
 background = pygame.image.load("OurMenuBackground.png")
 background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
 
-fontTitle = pygame.font.Font('freesansbold.ttf', 55)
-textSurfaceTitle = fontTitle.render('tbd', True, BLACK) 
+fontTitle = pygame.font.SysFont('Harrington', 75)
+textSurfaceTitle = fontTitle.render('The Pink Sphinx', True, BLACK) 
 textRectTitle = textSurfaceTitle.get_rect()
 textRectTitle.center = (600, 150)   # place the centre of the text
 
-fontSetting = pygame.font.Font('freesansbold.ttf', 55)
+fontSetting = pygame.font.SysFont('Harrington', 55)
 textSurfaceSetting = fontSetting.render('SETTINGS', True, BLACK) 
 textRectSetting = textSurfaceSetting.get_rect()
 textRectSetting.center = (600, 125)   # place the centre of the text
 
-fontSound = pygame.font.Font('freesansbold.ttf', 40)
+fontSound = pygame.font.SysFont('Harrington', 40)
 textSurfaceSound = fontSound.render('SOUND: ', True, BLACK) 
 textRectSound = textSurfaceSound.get_rect()
 textRectSound.center = (125, 245)   # place the centre of the text
@@ -51,7 +53,7 @@ class Button():
        font_name = name of font
        font_size = size of font
     """
-    def __init__(self, txt, location, action, bg=WHITE, fg=BLACK, size=(175, 75), font_name="Gothic", font_size=35):
+    def __init__(self, txt, location, action, bg=WHITE, fg=BLACK, size=(175, 75), font_name="Myriad Web Pro", font_size=30):
         self.color = bg  # the static (normal) color
         self.bg = bg  # actual background color, can change on mouseover
         self.fg = fg  # text color
@@ -88,22 +90,31 @@ class Button():
 def my_play_function():
     """A function that advances player to instruction screen"""
     global level
-    level += 2
+    level += 1
+    print(level)
+
 
 def my_setting_function():
     """A function that advances to the settings"""
     global level
-    level += 1
+    level += 3
+    print(level)
 
 def my_next_function():
     """A function that advances to the next level"""
     global level
     level += 1
+    print(level)
 
 def my_previous_function():
     """A function that retreats to the previous level"""
     global level
-    level -= 1
+    level -= 3
+    print(level)
+
+def PlayTheGame():
+    global level
+    level += 2
 
 def my_back_function():
     """A function that retreats to the previous level"""
@@ -144,12 +155,14 @@ def mousebuttondown(level):
         for button in level2_buttons:
             if button.rect.collidepoint(pos):
                 button.call_back()
-    else:
+    elif level == 3:
         for button in level3_buttons:
             if button.rect.collidepoint(pos):
                 button.call_back()
-                    
-    
+    elif level == 4:
+        for button in level4_buttons:
+            if button.rect.collidepoint(pos):
+                button.call_back()
 
 level = 1
 carryOn = True
@@ -159,18 +172,21 @@ clock = pygame.time.Clock()
 button_play = Button("PLAY", (SCREENWIDTH/3, SCREENHEIGHT/6*3.5), my_play_function, bg =  (196, 100, 40))
 button_setting  = Button("SETTINGS", (SCREENWIDTH/3*2, SCREENHEIGHT/6*3.5), my_setting_function, bg= (196, 100, 40))
 button_quit = Button("QUIT", (SCREENWIDTH/2, SCREENHEIGHT/4*3), my_quit_function, bg= (196, 100, 40))
-button_next = Button("NEXT", (SCREENWIDTH*7/8 + 40, SCREENHEIGHT*7/8),my_next_function, bg=(50, 200, 20))
-button_back = Button("BACK", (SCREENWIDTH/8 - 40, SCREENHEIGHT*7/8),my_previous_function, bg=(50, 200, 20))
-button_soundon = Button("ON", (SCREENWIDTH/3, SCREENHEIGHT/3 - 25), my_soundon_function, bg=(50, 200, 20))
-button_soundoff = Button("OFF", (SCREENWIDTH/2 + 100, SCREENHEIGHT/3 - 25), my_soundoff_function, bg=(50, 200, 20))
-button_restart = Button("RESTART", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_restart_function, bg=(50, 200, 20))
-button_menu = Button("MENU", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_menu_function, bg=(50, 200, 20))
-button_playScreenBack = Button("BACK", (SCREENWIDTH/8 - 40, SCREENHEIGHT*7/8),my_back_function, bg=(50, 200, 20))
+button_next = Button("NEXT", (SCREENWIDTH*7/8 + 40, SCREENHEIGHT*7/8),my_next_function, bg=(196, 100, 40))
+button_back = Button("BACK", (SCREENWIDTH/8 - 40, SCREENHEIGHT*7/8),my_previous_function, bg=(196, 100, 40))
+button_back2 = Button("BACK", (SCREENWIDTH/8 - 40, SCREENHEIGHT*7/8),my_previous_function, bg=(196, 100, 40))
+button_soundon = Button("ON", (SCREENWIDTH/3, SCREENHEIGHT/3 - 25), my_soundon_function, bg=(196, 100, 40))
+button_soundoff = Button("OFF", (SCREENWIDTH/2 + 100, SCREENHEIGHT/3 - 25), my_soundoff_function, bg=(196, 100, 40))
+button_restart = Button("RESTART", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_restart_function, bg=(196, 100, 40))
+button_menu = Button("MENU", (SCREENWIDTH/2, SCREENHEIGHT*2/3), my_menu_function, bg=(196, 100, 40))
+PlayTheGame = Button("PLAY", (SCREENWIDTH*7/8 + 40, SCREENHEIGHT*7/8), my_play_function, bg =  (196, 100, 40))
 
 #arrange button groups depending on level
 level1_buttons = [button_play, button_setting,button_quit]
-level2_buttons = [button_back, button_soundon, button_soundoff]
-level3_buttons = [button_playScreenBack, button_next]
+level4_buttons = [button_back, button_soundon, button_soundoff]
+level2_buttons = [button_back2, button_next]
+level3_buttons = [button_back, PlayTheGame]
+
 
 #---------Main Program Loop----------
 while carryOn:
@@ -193,14 +209,28 @@ while carryOn:
         for button in level1_buttons:
             button.draw()
         screen.blit(textSurfaceTitle, textRectTitle)
+        background = pygame.image.load("OurMenuBackground.png")
+        background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
     elif level == 2:
         for button in level2_buttons:
             button.draw()
-        screen.blit(textSurfaceSetting, textRectSetting)
-        screen.blit(textSurfaceSound, textRectSound)
+            background = pygame.image.load("Instruction Page 1.png")
+            background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
     elif level == 3:
         for button in level3_buttons:
             button.draw()
+            background = pygame.image.load("unnamed.png")
+            background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+    elif level == 4:
+        for button in level4_buttons:
+            button.draw()
+            screen.blit(textSurfaceSetting, textRectSetting)
+            screen.blit(textSurfaceSound, textRectSound)
+            background = pygame.image.load("OurMenuBackground.png")
+            background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+        
+
+        
 
     # Update the screen with queued shapes
     pygame.display.flip()
