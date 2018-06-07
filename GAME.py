@@ -6,6 +6,7 @@ from exitDoor_class import exitDoor
 from wall_class import wall
 pygame.init()
 
+
 PURPLE = (255, 0, 255)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
@@ -137,7 +138,7 @@ while carryOn:
         print ("You picked up the treasure!")
         artifact_counter += 1
     escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, False)
-    if artifact_counter == 2 and escape:
+    if artifact_counter == 3 and escape:
         print('YOU HAVE ESCAPED')
         carryOn=False
 
