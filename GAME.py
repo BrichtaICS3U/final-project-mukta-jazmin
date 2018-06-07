@@ -24,13 +24,14 @@ size = (SCREENWIDTH, SCREENHEIGHT)
 screen= pygame.display.set_mode(size)
 pygame.display.set_caption("...'")
 
+background = pygame.image.load("MainGameBackground.png")
+background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+
 all_sprites_list = pygame.sprite.Group()
                            
 playerplayer = player(75,70,70)
 playerplayer.rect.x = 0
 playerplayer.rect.y = 0
-
-
 
 treasure1 = Treasure(60, 80)
 treasure1.rect.x = 900
@@ -88,8 +89,6 @@ wall5 = wall(WALLCOLOUR, 1000, 25)
 wall5.rect.x = SCREENWIDTH/12
 wall5.rect.y=SCREENHEIGHT/2
 
-
-#all_player_list = pygame.sprite.Group()
 all_enemy_sprites = pygame.sprite.Group()
 all_treasure_list = pygame.sprite.Group()
 all_exitDoor_list = pygame.sprite.Group()
@@ -137,31 +136,39 @@ while carryOn:
     if point:
         print ("You picked up the treasure!")
         artifact_counter += 1
+
+    alive = True
+
     escape = pygame.sprite.spritecollide(playerplayer, all_exitDoor_list, False)
     if artifact_counter == 3 and escape:
-        print('YOU HAVE ESCAPED')
-        carryOn=False
+        background = pygame.image.load("cartoon-of-small-oasis-in-the-desert-vector-12132077.png")
+        background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+        alive = False       
 
     hits = pygame.sprite.spritecollide(playerplayer, all_enemy_sprites, False, pygame.sprite.collide_circle)
     if hits:
-        carryOn = False
+        background = pygame.image.load("FINAL MUMMY SCREEN.png")
+        background=pygame.transform.scale(background,(SCREENWIDTH, SCREENHEIGHT))
+        alive = False
 
     fontTitle = pygame.font.Font('freesansbold.ttf', 20)
     textSurfaceTitle = fontTitle.render('Score: ' + str(artifact_counter), True, BLACK) 
     textRectTitle = textSurfaceTitle.get_rect()
     textRectTitle.center = (1100, 50) 
 
-    pygame.display.update()
+    #pygame.display.update()
 
 
 #DRAWING ON SCREEN
-    screen.fill(SAND)
-    all_treasure_list.draw(screen)
-    all_walls_list.draw(screen)
-    all_exitDoor_list.draw(screen)
-    all_enemy_sprites.draw(screen)
-    all_sprites_list.draw(screen)
-    screen.blit(textSurfaceTitle, textRectTitle)
+    screen.blit(background, (0, 0))
+
+    if (alive):
+        all_treasure_list.draw(screen)
+        all_walls_list.draw(screen)
+        all_exitDoor_list.draw(screen)
+        all_enemy_sprites.draw(screen)
+        all_sprites_list.draw(screen)
+        screen.blit(textSurfaceTitle, textRectTitle)
     
 
     pygame.display.flip()
